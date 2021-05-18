@@ -1,0 +1,22 @@
+body{
+    margin:0;
+}
+*{
+    box-sizing: border-box;
+    border:1px solid rebeccapurple;
+}
+.menu-container{
+    background-color: royalblue;
+    height:80px;
+}
+.formula-container{
+    background-color: salmon;
+    height:30px;
+}
+.grid{
+    height: calc(100vh - (80px + 30px + 40px));
+}
+.sheets{
+    background-color: lightgreen;
+    height:40px;
+}
