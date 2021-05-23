@@ -5,10 +5,62 @@ body{
     box-sizing: border-box;
     /*border:1px solid rebeccapurple;*/
 }
+/*****************MENU CONTAINER***************/
+
 .menu-container{
-    background-color: royalblue;
+    background-color:lightblue;
     height:80px;
+    display: flex;
+    align-items: center;
 }
+.menu-container>*{
+    height:80%;
+    width:20%;
+    border-right: 2px solid;
+}
+.formating_container{
+    display: flex;
+    justify-content: space-around;
+}
+.subgroup{
+    width: 45%;
+    height:100%
+}
+.subgroup{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.subgroup>*{
+    width: 100%;
+}
+.BUI_container{
+
+    display: flex;
+    justify-content: space-between;
+}
+.BUI_container>*{
+    width:30%
+}
+.color-container{
+    display:flex;
+    justify-content: space-between;
+}
+.color-container>*{
+    width: 45%;
+}
+.allignment_container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+.allignment_container>*{
+    width:20%;
+}
+
+
+
+/****************END MENU************/
 .formula-container{
     background-color: salmon;
     height:30px;
@@ -16,14 +68,13 @@ body{
 
 .sheets{
     background-color: lightcoral;
-    height:30px;
+    height:40px;
     display: flex;
-    overflow-x: auto;
-    min-width: calc(100vw - 30px);
+    
 }
 .add-sheet_container{
     height:100%;
-    width:30px;
+    min-width:30px;
     border:1px solid gray;
     display: flex;
     justify-content: center;
@@ -36,15 +87,24 @@ body{
 .sheets-list{
     display: flex;
     height: 100%;
-    
+    overflow-x: auto;
     
 }
+.sheets-list::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .sheets-list {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
 .sheet{
-    width:60px;
+    min-width:60px;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    border:1px solid;
 }
 .active-sheet{
     background-color: white;
