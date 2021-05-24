@@ -61,13 +61,33 @@ body{
 
 
 /****************END MENU************/
+
+/***************Formula Container******************/
 .formula-container{
-    background-color: salmon;
+    background-color:rgb(151, 169, 175);
     height:30px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+.adress-box{
+   width: 10%;;
+}
+.seperator{
+  width: 3%;
+}
+.formula-box{
+   width:80%
 }
 
+
+
+
+
+/****************END FORMULA***********************/
+
 .sheets{
-    background-color: lightcoral;
+    
     height:40px;
     display: flex;
     
@@ -142,7 +162,6 @@ body{
 
 .left-col{
     width:25px;
-    border: 1px solid red;
 }
 .left-col_box{
     height:30px;
