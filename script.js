@@ -6,6 +6,7 @@ let addressBar=document.querySelector(".address-box");
 let leftBtn=document.querySelector(".left");
 let rightBtn=document.querySelector(".right");
 let centerBtn=document.querySelector(".center");
+let fontBtn=document.querySelector(".font-size");
 firstSheet.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
     sheetsArr.forEach(function(sheet){
@@ -71,3 +72,10 @@ function getRidCidFronAddress(address){
     let rid=Number(cellrowAdr)-1;
     return {cid,rid};
 }
+fontBtn.addEventListener("change",function(){
+    let fontSize=fontBtn.value;
+    let address=addressBar.value;
+    let {rid,cid}=getRidCidFronAddress(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    cell.style.fontSize=fontSize+"px";
+})
