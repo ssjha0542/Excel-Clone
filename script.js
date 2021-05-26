@@ -7,6 +7,7 @@ let leftBtn=document.querySelector(".left");
 let rightBtn=document.querySelector(".right");
 let centerBtn=document.querySelector(".center");
 let fontBtn=document.querySelector(".font-size");
+let fontFamily=document.querySelector(".font-family");
 firstSheet.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
     sheetsArr.forEach(function(sheet){
@@ -78,4 +79,11 @@ fontBtn.addEventListener("change",function(){
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.fontSize=fontSize+"px";
+})
+fontFamily.addEventListener("change",function(){
+    let address=addressBar.value;
+    let {rid,cid}=getRidCidFronAddress(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cFont=fontFamily.value;
+    cell.style.fontFamily=cFont;
 })
