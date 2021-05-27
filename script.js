@@ -8,6 +8,9 @@ let rightBtn=document.querySelector(".right");
 let centerBtn=document.querySelector(".center");
 let fontBtn=document.querySelector(".font-size");
 let fontFamily=document.querySelector(".font-family");
+let boldElement=document.querySelector(".bold");
+let italicElement=document.querySelector(".italic");
+let underlineElement=document.querySelector(".underline");
 firstSheet.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
     sheetsArr.forEach(function(sheet){
@@ -86,4 +89,46 @@ fontFamily.addEventListener("change",function(){
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     let cFont=fontFamily.value;
     cell.style.fontFamily=cFont;
+})
+boldElement.addEventListener("click",function(){
+    let isActive=boldElement.classList.contains("active-btn");
+    let address=addressBar.value;
+    let {rid,cid}=getRidCidFronAddress(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    if(isActive==false){
+        cell.style.fontWeight="bold";
+        boldElement.classList.add("active-btn");
+    }
+    else{
+        cell.style.fontWeight="normal";
+        boldElement.classList.remove("active-btn");
+    }
+})
+italicElement.addEventListener("click",function(){
+    let isActive=italicElement.classList.contains("active-btn");
+    let address=addressBar.value;
+    let {rid,cid}=getRidCidFronAddress(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    if(isActive==false){
+        cell.style.fontStyle="italic";
+        italicElement.classList.add("active-btn");
+    }
+    else{
+        cell.style.fontStyle="normal";
+        italicElement.classList.remove("active-btn");
+    }
+})
+underlineElement.addEventListener("click",function(){
+    let isActive=underlineElement.classList.contains("active-btn");
+    let address=addressBar.value;
+    let {rid,cid}=getRidCidFronAddress(address);
+    let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    if(isActive==false){
+        cell.style.textDecoration="underline";
+        underlineElement.classList.add("active-btn");
+    }
+    else{
+        cell.style.textDecoration="none";
+        underlineElement.classList.remove("active-btn");
+    }
 })
