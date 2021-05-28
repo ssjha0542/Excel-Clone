@@ -48,6 +48,13 @@ for(let i=0;i<allCells.length;i++){
         let colAdd=String.fromCharCode(cid+65);
         let address=colAdd+rowAdd;
         addressBar.value=address;
+        let cellObject=sheetDB[rid][cid];
+        if(cellObject.bold==true){
+            boldElement.classList.add("active-btn");
+        }
+        else{
+            boldElement.classList.remove("active-btn");
+        }
     })
 }
 allCells[0].click();
@@ -95,13 +102,17 @@ boldElement.addEventListener("click",function(){
     let address=addressBar.value;
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObject=sheetDB[rid][cid];
+    
     if(isActive==false){
         cell.style.fontWeight="bold";
         boldElement.classList.add("active-btn");
+        cellObject.bold=true;
     }
     else{
         cell.style.fontWeight="normal";
         boldElement.classList.remove("active-btn");
+        cellObject.bold=false;
     }
 })
 italicElement.addEventListener("click",function(){
