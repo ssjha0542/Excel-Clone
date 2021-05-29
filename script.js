@@ -11,7 +11,8 @@ let fontFamily=document.querySelector(".font-family");
 let boldElement=document.querySelector(".bold");
 let italicElement=document.querySelector(".italic");
 let underlineElement=document.querySelector(".underline");
-let allAlignBtns=document.querySelectorAll(".alignment-container");
+let allAlignBtns=document.querySelectorAll(".allignment_container>*");
+
 firstSheet.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
     sheetsArr.forEach(function(sheet){
@@ -68,6 +69,19 @@ for(let i=0;i<allCells.length;i++){
         else{
             underlineElement.classList.remove("active-btn");
         }
+        /********handling the alignments ***********/
+        for(let i=0;i<allAlignBtns.length;i++){
+            allAlignBtns[i].classList.remove("active-btn");
+        }
+        if(cellObject.halign=="left"){
+           leftBtn.classList.add("active-btn");
+        }
+        else if(cellObject.halign=="right"){
+            rightBtn.classList.add("active-btn");
+        }
+        else if(cellObject.halign=="center"){
+            centerBtn.classList.add("active-btn");
+        }
     })
 }
 allCells[0].click();
@@ -76,18 +90,36 @@ leftBtn.addEventListener("click", function(){
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign="left";
+    for(let i=0;i<allAlignBtns.length;i++){
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    leftBtn.classList.add("active-btn");
+    let cellObject=sheetDB[rid][cid];
+    cellObject.halign="left";
 })
 centerBtn.addEventListener("click", function(){
     let address=addressBar.value;
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign="center";
+    for(let i=0;i<allAlignBtns.length;i++){
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    centerBtn.classList.add("active-btn");
+    let cellObject=sheetDB[rid][cid];
+    cellObject.halign="center";
 })
 rightBtn.addEventListener("click", function(){
     let address=addressBar.value;
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
     cell.style.textAlign="right";
+    for(let i=0;i<allAlignBtns.length;i++){
+        allAlignBtns[i].classList.remove("active-btn");
+    }
+    rightBtn.classList.add("active-btn");
+    let cellObject=sheetDB[rid][cid];
+    cellObject.halign="right";
 })
 function getRidCidFronAddress(address){
     let cellColAdr=address.charCodeAt(0);
