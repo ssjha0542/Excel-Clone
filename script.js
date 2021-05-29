@@ -11,6 +11,7 @@ let fontFamily=document.querySelector(".font-family");
 let boldElement=document.querySelector(".bold");
 let italicElement=document.querySelector(".italic");
 let underlineElement=document.querySelector(".underline");
+let allAlignBtns=document.querySelectorAll(".alignment-container");
 firstSheet.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
     sheetsArr.forEach(function(sheet){
@@ -54,6 +55,18 @@ for(let i=0;i<allCells.length;i++){
         }
         else{
             boldElement.classList.remove("active-btn");
+        }
+        if(cellObject.italic==true){
+            italicElement.classList.add("active-btn");
+        }
+        else{
+            italicElement.classList.remove("active-btn");
+        }
+        if(cellObject.underline==true){
+            underlineElement.classList.add("active-btn");
+        }
+        else{
+            underlineElement.classList.remove("active-btn");
         }
     })
 }
@@ -120,13 +133,16 @@ italicElement.addEventListener("click",function(){
     let address=addressBar.value;
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObject=sheetDB[rid][cid];
     if(isActive==false){
         cell.style.fontStyle="italic";
         italicElement.classList.add("active-btn");
+        cellObject.italic=true;
     }
     else{
         cell.style.fontStyle="normal";
         italicElement.classList.remove("active-btn");
+        cellObject.italic=false;
     }
 })
 underlineElement.addEventListener("click",function(){
@@ -134,12 +150,15 @@ underlineElement.addEventListener("click",function(){
     let address=addressBar.value;
     let {rid,cid}=getRidCidFronAddress(address);
     let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+    let cellObject=sheetDB[rid][cid];
     if(isActive==false){
         cell.style.textDecoration="underline";
         underlineElement.classList.add("active-btn");
+        cellObject.underline=true;
     }
     else{
         cell.style.textDecoration="none";
         underlineElement.classList.remove("active-btn");
+        cellObject.underline=false;
     }
 })

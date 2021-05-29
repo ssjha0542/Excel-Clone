@@ -29,9 +29,9 @@ for(let i=0;i<100;i++){
     for(let j=0;j<26;j++){
         let cell={
             //formatting
-            bold:"normal",
-            italic:"normal",
-            underline:"none",
+            bold:false,
+            italic:false,
+            underline:false,
             fontFamily:"Arial",
             fontSize:"10",
             halign:"left"
