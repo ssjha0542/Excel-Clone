@@ -1,6 +1,7 @@
 
 let leftCol=document.querySelector(".left-col");
 let topRow=document.querySelector(".top-row");
+
 let str="";
 for(let i=0;i<26;i++){
     str+=`<div class='col'>${String.fromCharCode(65+i)}</div>`;
@@ -23,8 +24,11 @@ for(let i=0;i<100;i++){
 }
 
 grid.innerHTML=str;
-let sheetDB=[];
-for(let i=0;i<100;i++){
+let workSheetDB=[];
+function   initCurrentSheetDB(){
+    
+    let sheetDB=[];
+   for(let i=0;i<100;i++){
     let row=[]
     for(let j=0;j<26;j++){
         let cell={
@@ -40,4 +44,8 @@ for(let i=0;i<100;i++){
         row.push(cell);
     }
     sheetDB.push(row);
+
+    }
+    workSheetDB.push(sheetDB);
 }
+initCurrentSheetDB();

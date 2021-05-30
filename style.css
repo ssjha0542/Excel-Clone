@@ -95,6 +95,7 @@ body{
     display: flex;
     
     
+    background-color: lightgrey;
 }
 .add-sheet_container{
     height:100%;
@@ -103,6 +104,8 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    background-color: lightgrey;
 }
 .icon{
     font-size: 1.2rem;
@@ -128,10 +131,10 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    border:1px solid;
+    
 }
 .active-sheet{
-    background-color: white;
+    background-color:white;
 }
 
 

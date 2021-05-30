@@ -12,6 +12,7 @@ let boldElement=document.querySelector(".bold");
 let italicElement=document.querySelector(".italic");
 let underlineElement=document.querySelector(".underline");
 let allAlignBtns=document.querySelectorAll(".allignment_container>*");
+let sheetDB=workSheetDB[0];
 
 firstSheet.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
@@ -32,6 +33,8 @@ addBtnContainer.addEventListener("click",function(){
     NewSheet.setAttribute("sheetIdx",idx+1);
     NewSheet.innerText=`Sheet ${idx+2}`;
     sheetList.appendChild(NewSheet);
+    initCurrentSheetDB();
+   
     NewSheet.addEventListener("click",function(){
         let sheetsArr=document.querySelectorAll(".sheet");
         sheetsArr.forEach(function(sheet){
