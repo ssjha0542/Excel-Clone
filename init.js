@@ -25,7 +25,7 @@ for(let i=0;i<100;i++){
 
 grid.innerHTML=str;
 let workSheetDB=[];
-function   initCurrentSheetDB(){
+function initCurrentSheetDB(){
     
     let sheetDB=[];
    for(let i=0;i<100;i++){
@@ -38,7 +38,8 @@ function   initCurrentSheetDB(){
             underline:false,
             fontFamily:"Arial",
             fontSize:"10",
-            halign:"left"
+            halign:"left",
+            value:""
 
         }
         row.push(cell);

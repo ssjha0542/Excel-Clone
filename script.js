@@ -14,15 +14,9 @@ let underlineElement=document.querySelector(".underline");
 let allAlignBtns=document.querySelectorAll(".allignment_container>*");
 let sheetDB=workSheetDB[0];
 
-firstSheet.addEventListener("click",function(){
-    let sheetsArr=document.querySelectorAll(".sheet");
-    sheetsArr.forEach(function(sheet){
-        sheet.classList.remove("active-sheet");
-    })
-    if(!firstSheet.classList[1]){
-        firstSheet.classList.add("active-sheet");
-    }
-})
+firstSheet.addEventListener("click",handleActiveSheet)
+    
+
 addBtnContainer.addEventListener("click",function(){
     let sheetsArr=document.querySelectorAll(".sheet");
     let lastSheetElem=sheetsArr[sheetsArr.length-1];
@@ -31,20 +25,37 @@ addBtnContainer.addEventListener("click",function(){
     let NewSheet=document.createElement("div");
     NewSheet.setAttribute("class","sheet");
     NewSheet.setAttribute("sheetIdx",idx+1);
-    NewSheet.innerText=`Sheet ${idx+2}`;
+    NewSheet.innerText=`Sheet ${idx+1}`;
     sheetList.appendChild(NewSheet);
-    initCurrentSheetDB();
-   
-    NewSheet.addEventListener("click",function(){
-        let sheetsArr=document.querySelectorAll(".sheet");
-        sheetsArr.forEach(function(sheet){
-            sheet.classList.remove("active-sheet");
-        })
-        if(!NewSheet.classList[1]){
-            NewSheet.classList.add("active-sheet");
-        }
+    sheetsArr.forEach(function(sheet){
+        sheet.classList.remove("active-sheet");
     })
+    sheetsArr=document.querySelectorAll(".sheet");
+    sheetsArr[sheetsArr.length-1].classList.add("active-sheet");
+    initCurrentSheetDB();
+    
+    sheetDB=workSheetDB[idx];
+    initUI();
+    
+   
+    NewSheet.addEventListener("click",handleActiveSheet);
 })
+function handleActiveSheet(e){
+    let MySheet = e.currentTarget;
+    let sheetsArr = document.querySelectorAll(".sheet");
+    sheetsArr.forEach(function (sheet) {
+        sheet.classList.remove("active-sheet");
+    })
+    if (!MySheet.classList[1]) {
+        MySheet.classList.add("active-sheet");
+    }
+    //  index
+    let sheetIdx = MySheet.getAttribute("sheetIdx");
+        ;
+    sheetDB = workSheetDB[sheetIdx - 1];
+    // get data from that and set ui
+    setUI(sheetDB);
+}
 for(let i=0;i<allCells.length;i++){
     allCells[i].addEventListener("click",function handleCells(){
         let rid=Number(allCells[i].getAttribute("rid"));
@@ -85,7 +96,15 @@ for(let i=0;i<allCells.length;i++){
         else if(cellObject.halign=="center"){
             centerBtn.classList.add("active-btn");
         }
-    })
+    });
+    allCells[i].addEventListener("keydown", function (e) {
+        let obj = allCells[i].getBoundingClientRect();
+        let height = obj.height;
+        let address = addressBar.value;
+        let { rid, cid } = getRidCidFronAddress(address);
+        let leftCol = document.querySelectorAll(".left-col .left-col_box")[rid];
+        leftCol.style.height = height + "px";
+    });
 }
 allCells[0].click();
 leftBtn.addEventListener("click", function(){
@@ -197,3 +216,37 @@ underlineElement.addEventListener("click",function(){
         cellObject.underline=false;
     }
 })
+function initUI(){
+    for(let i=0;i<allCells.length;i++){
+        allCells[i].style.fontWeight="normal";
+         allCells[i].style.fontStyle="normal";
+         allCells[i].style.textDecoration="none";
+         allCells[i].style.fontSize="10px";
+         allCells[i].style.textAlign="left";
+         allCells[i].innerText="";
+     }
+}
+for(let i=0;i<allCells.length;i++){
+    allCells[i].addEventListener("blur",function handleCells(){
+        
+        
+        let address=addressBar.value;
+       let {rid,cid}=getRidCidFronAddress(address);
+        let cellObject=sheetDB[rid][cid];
+        let cell=document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`);
+        cellObject.value=cell.innerText;
+    })
+}
+function setUI(sheetDB){
+     for(let i=0;i<sheetDB.length;i++){
+         for(let j=0;j<sheetDB[i].length;j++){
+            let cell=document.querySelector(`.col[rid="${i}"][cid="${j}"]`);
+            let{bold,italic,underline,fontFamily,fontSize,halign,value}=sheetDB[i][j];
+            cell.style.fontWeight=bold==true?"bold":"normal";
+            cell.style.fontStyle=italic==true?"italic":"normal";
+            cell.style.textDecoration=underline==true?"underline":"none";
+            cell.innerText=value;
+
+         }
+     }
+}
