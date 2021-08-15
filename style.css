@@ -7,16 +7,17 @@ body{
 }
 /*****************MENU CONTAINER***************/
 
-.menu-container{
-    background-color:lightblue;
-    height:80px;
-    display: flex;
-    align-items: center;
+.menu-container {
+	background-color: #004e15da;
+	height: 80px;
+	display: flex;
+	align-items: center;
 }
-.menu-container>*{
-    height:80%;
-    width:20%;
-    border-right: 2px solid;
+
+.menu-container > * {
+	height: 80%;
+	width: 20%;
+	border-right: 2px solid rgba(211, 211, 211, 0.247);
 }
 .formating_container{
     display: flex;
@@ -109,7 +110,7 @@ body{
 }
 .icon{
     font-size: 1.2rem;
-    color: lightgreen;
+    color: green;
 }
 .sheets-list{
     display: flex;
@@ -131,7 +132,7 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    border: 1px solid white;
 }
 .active-sheet{
     background-color:white;
@@ -142,40 +143,50 @@ body{
 
 .top-left-block{
     height: 30px;
-    width: 25px;
-    background-color: gray;
+	width: 25px;
+	background-color: rgb(82, 82, 82);
+	position: absolute;
+	z-index: 100;
 }
 
 .top-row{
     height: 30px;
-    background-color: lightgreen;
-    display: flex;
-    position: absolute;
-    top:0px;
-    left:25px;
+	background-color: rgba(180, 180, 180, 0.452);
+	display: flex;
+	position: absolute;
+	top: 0px;
+	left: 25px;
+	z-index: 90;
 }
 
 .row{
     display:flex;
 }
 .col{
-    min-width:80px;
-    border: 1px solid;
-    min-height: 30px;
+    min-width: 80px;
+	max-width: 80px;
+	border: 1px solid rgba(141, 141, 141, 0.13);
+	min-height: 30px;
+	word-break: break-all;
     /*display: flex;
     justify-content: center;
     align-items: center;*/
 }
 
 .left-col{
-    width:25px;
+    width: 25px;
+	position: absolute;
+	z-index: 90;
+	top: 30px;
+	left: 0px;
 }
-.left-col_box{
-    height:30px;
-    background-color: lightgreen;
-    text-align: center;
-    border: 1px solid;
+.left-col_box {
+	height: 30px;
+	background-color: rgba(180, 180, 180, 0.452);
+	text-align: center;
+	border: 1px solid rgba(141, 141, 141, 0.13);
 }
+
 .grid_container{
     height: calc(100vh - (80px + 30px + 40px));
     overflow: auto;

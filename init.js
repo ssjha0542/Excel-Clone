@@ -1,52 +1,57 @@
+// Grid Container JS
 
-let leftCol=document.querySelector(".left-col");
-let topRow=document.querySelector(".top-row");
-
-let str="";
-for(let i=0;i<26;i++){
-    str+=`<div class='col'>${String.fromCharCode(65+i)}</div>`;
+// Adding all alphabets in each Top Coloumn
+let topRow = document.querySelector(".top-row");
+let str = "";
+for (let i = 0; i < 26; i++) {
+	str += `<div class='col'>${String.fromCharCode(65 + i)}</div>`;
 }
-topRow.innerHTML=str;
-str="";
-for(let i=0;i<100;i++){
-    str+=`<div class='left-col_box'>${i+1}</div>`;
+topRow.innerHTML = str;
+
+// Adding no.s from 1-100 in leftmost column
+let leftCol = document.querySelector(".left-col");
+str = "";
+for (let i = 0; i < 100; i++) {
+	str += `<div class='left-col_box'>${i + 1}</div>`;
 }
-leftCol.innerHTML=str;
-str="";
-let grid=document.querySelector(".grid");
+leftCol.innerHTML = str;
 
-for(let i=0;i<100;i++){
-    str+=`<div class="row">`;
-    for(let j=0;j<26;j++){
-        str+=`<div class='col' rid=${i} cid=${j} contenteditable="true"></div>`;
-    }
-    str+="</div>";
+// 2d array -> Generating our grid
+let grid = document.querySelector(".grid");
+str = "";
+for (let i = 0; i < 100; i++) {
+	str += `<div class="row">`;
+	for (let j = 0; j < 26; j++) {
+		str += `<div class='col' rid=${i} cid=${j} contenteditable="true"></div>`;
+	}
+	str += "</div>";
 }
+grid.innerHTML = str;
 
-grid.innerHTML=str;
-let workSheetDB=[];
-function initCurrentSheetDB(){
-    
-    let sheetDB=[];
-   for(let i=0;i<100;i++){
-    let row=[]
-    for(let j=0;j<26;j++){
-        let cell={
-            //formatting
-            bold:false,
-            italic:false,
-            underline:false,
-            fontFamily:"Arial",
-            fontSize:"10",
-            halign:"left",
-            value:""
-
-        }
-        row.push(cell);
-    }
-    sheetDB.push(row);
-
-    }
-    workSheetDB.push(sheetDB);
+// initial load
+// Creating Temporary DATABASE(to keep track of every cell)
+// making database -> worksheet [sheetDB1[][],sheetDB2[][]...]
+workSheetDB = []; // Stores data of every sheet
+function  initCurrentSheetDB() {
+	let sheetDB = []; // Stores data of all cells present in the sheet
+	for (let i = 0; i < 100; i++) {
+		let row = [];
+		for (let j = 0; j < 26; j++) {
+			let cell = {
+				bold: false,
+				italic: "noraml",
+				underline: "none",
+				fontFamily: "Arial",
+				fontSize: "16",
+				halign: "left",
+				value: "",
+				children: [],
+				formula: "",
+			};
+			row.push(cell);
+		}
+		sheetDB.push(row);
+	}
+	workSheetDB.push(sheetDB);
 }
 initCurrentSheetDB();

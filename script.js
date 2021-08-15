@@ -11,8 +11,12 @@ let fontFamily=document.querySelector(".font-family");
 let boldElement=document.querySelector(".bold");
 let italicElement=document.querySelector(".italic");
 let underlineElement=document.querySelector(".underline");
+let formulaInput=document.querySelector(".formula-box");
 let allAlignBtns=document.querySelectorAll(".allignment_container>*");
-let sheetDB=workSheetDB[0];
+let gridContainer = document.querySelector(".grid_container");
+let topLeftBlock = document.querySelector(".top-left-block");
+let sheetDB = workSheetDB[0];
+
 
 firstSheet.addEventListener("click",handleActiveSheet)
     
@@ -51,7 +55,6 @@ function handleActiveSheet(e){
     }
     //  index
     let sheetIdx = MySheet.getAttribute("sheetIdx");
-        ;
     sheetDB = workSheetDB[sheetIdx - 1];
     // get data from that and set ui
     setUI(sheetDB);
@@ -250,3 +253,104 @@ function setUI(sheetDB){
          }
      }
 }
+
+//***************formula container***************//
+formulaInput.addEventListener("keydowm",function(e){
+    if(e.key=="Enter"&& formulaInput.value!=""){
+        let formula=formulaInput.value;
+        let address = addressBar.value;
+        // getCurrentCell
+        let { rid, cid } = getRIdCIdfromAddress(address);
+        // 2d
+        let cellObject = sheetDB[rid][cid];
+        let prevFormula = cellObject.formula;
+        if (prevFormula == formula) {
+            return;
+        }
+        // previoulsy formula is set so remove it  
+        if (prevFormula != "" && prevFormula != formula) {
+            removeFormula(cellObject, address);
+        }
+        //compute value of formula
+        let value=evaluate(formula);
+        setUIByFormula(value, rid, cid);
+        setFormula(evaluatedValue, Newformula, rid, cid, address);
+        changeChildrens(cellObject);
+    }
+})
+function evaluate(formula) {
+    let formulaTokens = formula.split(" ");
+  
+    for (let i = 0; i < formulaTokens.length; i++) {
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if (firstCharOfToken >= 65 && firstCharOfToken <= 90) {
+            
+            let { rid, cid } = getRIdCIdfromAddress(formulaTokens[i]);
+            let cellObject = sheetDB[rid][cid];
+            let {value} = cellObject;
+            formula = formula.replace(formulaTokens[i], value);
+        }
+    }
+    let ans = eval(formula);
+    return ans;
+}
+function setUIByFormula(value, rid, cid) {
+document.querySelector(`.col[rid="${rid}"][cid="${cid}"]`).innerText = value;
+}
+function setFormula(value, formula, rid, cid, address) {
+    let cellObject = sheetDB[rid][cid];
+    cellObject.value = value;
+    cellObject.formula = formula;
+    let formulaTokens = formula.split(" ");
+    // (A1 + A2)
+    for (let i = 0; i < formulaTokens.length; i++) {
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if (firstCharOfToken >= 65 && firstCharOfToken <= 90) {
+            let parentRIdCid = getRIdCIdfromAddress(formulaTokens[i]);
+            let cellObject = sheetDB[parentRIdCid.rid][parentRIdCid.cid];
+            cellObject.children.push(address)
+        }
+    }
+}
+function changeChildrens(cellObject) {
+    let childrens = cellObject.children;
+    for (let i = 0; i < childrens.length; i++) {
+        let chAddress = childrens[i];
+        let chRICIObj = getRIdCIdfromAddress(chAddress);
+        let chObj = sheetDB[chRICIObj.rid][chRICIObj.cid];
+        let formula = chObj.formula;
+        let evaluatedValue = evaluate(formula);
+        setUIByFormula(evaluatedValue, chRICIObj.rid, chRICIObj.cid);
+        chObj.value = evaluatedValue;
+        changeChildrens(chObj);
+    }
+
+}
+function removeFormula(cellObject, address) {
+    let formula = cellObject.formula;
+    let formulaTokens = formula.split(" ");
+    for (let i = 0; i < formulaTokens.length; i++) {
+        let firstCharOfToken = formulaTokens[i].charCodeAt(0);
+        if (firstCharOfToken >= 65 && firstCharOfToken <= 90) {
+            let parentRIdCid = getRIdCIdfromAddress(formulaTokens[i]);
+            let parentCellObject = sheetDB[parentRIdCid.rid][parentRIdCid.cid];
+            
+            let childrens = parentCellObject.children;
+            let idx = childrens.indexOf(address);
+            childrens.splice(idx, 1);
+        }
+    }
+    cellObject.formula = "";
+}
+
+function getRIdCIdfromAddress(adress) {
+    // B3
+    let cellColAdr = adress.charCodeAt(0);
+
+    let cellrowAdr = adress.slice(1);
+    let cid = cellColAdr - 65;
+    let rid = Number(cellrowAdr) - 1;
+    return { cid, rid };
+
+}
+
