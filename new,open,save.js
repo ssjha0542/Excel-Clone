@@ -2,7 +2,7 @@ let download = document.querySelector(".download");
 let clear = document.querySelector(".new");
 
 download.addEventListener("click", function () {
-	const data = JSON.stringify(workSheetDb);
+	const data = JSON.stringify(workSheetDB);
 	
 	const blob = new Blob([data], { type: "application/json" }); 
 	const url = window.URL.createObjectURL(blob); 
